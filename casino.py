@@ -102,10 +102,10 @@ if choice1 == 1:
     
 elif choice1 == 2:
     while True:
-        sql.execute("SELECT login FROM casinodata")
-        logins = "".join(map(str, sql.fetchall()))
         login = input("Login daxil edin: ")
-        if login not in logins:
+        logincheck = sql.execute(f"SELECT COUNT(*) FROM casinodata WHERE login = '{login}'")
+        logincheck = int("".join(map(str, sql.fetchone())))
+        if logincheck == 0:
             password = input("Shifre daxil edin: ")
             secret_question = input("Ilk evcil heyvaninizin adi: ")
             sql.execute(f"INSERT INTO casinodata(login, password, secret_question) VALUES('{login}', '{password}', '{secret_question}')")
